@@ -1,0 +1,45 @@
+pkgname=exa
+pkgver=0.8.0
+pkgrel=1
+pkgdesc="ls replacement - 4de.win version"
+arch="x86_64"
+url="https://the.exa.website/"
+license="MIT"
+depends="libssh2 zlib"
+makedepends="cmake rust cargo git tzdata"
+source="$pkgname-$pkgver.tar.gz::https://github.com/ogham/exa/archive/v$pkgver.tar.gz"
+
+build() {
+  pwd
+  make 
+}
+
+package() {
+  pwd
+  cd src/$pkgname-$pkgver
+
+  make PREFIX="$pkgdir/usr" install
+
+  gzip "$pkgdir/usr/share/man/man1/exa.1"
+
+  install -Dm644 contrib/completions.bash \
+    "$pkgdir/etc/bash_completion.d/$pkgname"
+
+  install -Dm644 contrib/completions.zsh \
+    "$pkgdir/usr/share/zsh/site-functions/_$pkgname"
+
+  install -Dm644 contrib/completions.fish \
+    "$pkgdir/usr/share/fish/vendor_completions.d/$pkgname.fish"
+
+  install -Dm644 LICEN?E \
+    "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
+  
+  if [ ! -e /etc/localtime ]; then
+    cp /usr/share/zoneinfo/Europe/Brussels /etc/localtime
+  fi
+
+  if [ ! -e /etc/timezone ]; then
+    echo "Europe/Brussels" > /etc/timezone
+  fi
+}
+sha512sums="5ac142f40af8408e03e7fa7b204216182ad696e44c1d044bd73d04957a638a8ed7295c15fc49279165b5dfb2d8b6a559847930de0e267f479cdab88fe9c49beb  exa-0.8.0.tar.gz"

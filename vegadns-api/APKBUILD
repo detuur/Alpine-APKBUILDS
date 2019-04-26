@@ -1,0 +1,26 @@
+# Written by: detuur
+# author waives any rights or ownership they have
+pkgname=vegadns-api
+_sha=0dc40735447b3987a2c3c2b4661e597d52dcce1d
+pkgver=20180613
+pkgrel=0
+pkgdesc="A tinydns administration tool for managing authoritative DNS records."
+url="http://www.vegadns.org/"
+arch="all"
+license="Apache-2.0"
+depends="python2 mariadb tinydns"
+makedepends="python2-dev libffi-dev py2-virtualenv"
+source="$pkgname-$pkgver.tar.gz::https://github.com/shupp/VegaDNS-API/archive/$_sha.tar.gz"
+builddir="$srcdir/VegaDNS-API-$_sha"
+options="!check !fhs"
+
+build() {
+  cd "$builddir"
+  make venv
+}
+
+package() {
+  mkdir -p "$pkgdir/opt"
+  cp -r "$builddir/venv" "$pkgdir/opt/$pkgname"
+}
+sha512sums="26e3033b45895b5ad5275806601e826ced6f9be3eadb177c82ffe1ebf29fade920a77f4b0bc8470ad4f25152bdc207f92e82543f31311f5dfd6ed36b191b3f25  vegadns-api-20180613.tar.gz"
