@@ -1,0 +1,51 @@
+# 4de.win Maintainer: detuur <detuur@4de.win>
+# Original Maintainer: Donald Webster <fryfrog@gmail.com>
+# Contributor: Tom Moore <t.moore01@gmail.com>
+# Contributor: Mikael Eriksson <mikael_eriksson@miffe.org>
+# Contributor: Maxime Gauduin <alucryd@archlinux.org>
+# Contributor: Rob Sletten <rsletten@gmail.com>
+# Contributor: monty <linksoft@gmx.de>
+# Contributor: Jon Wiersma <archaur@jonw.org>
+# Contributor: Arthur <arthur.darcet@m4x.org>
+# Contributor: Praekon <praekon@googlemail.com>
+
+pkgname=plex-media-server
+pkgver=1.15.4.993
+_pkgsum=bb4a2cb6c
+pkgrel=1
+pkgdesc='Plex Media Server'
+arch="x86_64"
+url="https://plex.tv/"
+license="custom"
+install="plex-media-server.install"
+source="plexmediaserver.conf.d
+        plexmediaserver.init.d
+        plex.sysusers
+        plex.tmpfiles
+        terms.txt
+        https://downloads.plex.tv/plex-media-server-new/${pkgver}-${_pkgsum}/redhat/plexmediaserver-${pkgver}-${_pkgsum}.x86_64.rpm"
+
+
+prepare() {
+  if [[ $CARCH = armv7h ]] || [[ $CARCH = aarch64 ]]; then
+    bsdtar -xf data.tar.xz
+  fi
+}
+
+package() {
+  install -d -m 755 "${pkgdir}/usr/lib/plexmediaserver"
+  cp -dr --no-preserve='ownership' "${srcdir}/usr/lib/plexmediaserver" "${pkgdir}/usr/lib/"
+
+  install -D -m 644 "${srcdir}/plexmediaserver.conf.d" "${pkgdir}/etc/conf.d/plexmediaserver"
+  install -D -m 644 "${srcdir}/plexmediaserver.init.d" "${pkgdir}/etc/init.d/plex-media-server"
+  install -D -m 644 "${srcdir}/plex.sysusers" "${pkgdir}/usr/lib/sysusers.d/plex.conf"
+  install -D -m 644 "${srcdir}/plex.tmpfiles" "${pkgdir}/usr/lib/tmpfiles.d/plex.conf"
+
+  install -D -m 644 "${srcdir}/terms.txt" "${pkgdir}/usr/share/licenses/${pkgname}/terms.txt"
+}
+sha512sums="5c8f99418159434ca6c8587302b2e6c08a0832072a275e50bbb60f56d0f642907b490ec5ae572b3bb2604984fd95ced9c15560dda7fce13b8059a44da7677daf  plexmediaserver.conf.d
+1bb738462404aeddece472da2ba42c85d3d8f9630bccda9566bcb5fdc47546209ae00fa7318b5ef87e36921fa1e0dea23d20231c80bc8b4f9c31aecb055f84c5  plexmediaserver.init.d
+f6cfe558d3345986e8e2940ef2e410f4bd993fa130c804a35516c190b31a2548e46527c28e5eece9d4fd13b3bef9eaca0f6c3487a6f4a5354b86fd162e465320  plex.sysusers
+c6b1963cabc54bbc4f3cb776fa000dc93f2deef9d56f4594fd30d471c013004a8e85668cd4e14a8188b3b421d3b81de10104e1c091c515091750a382be9e445e  plex.tmpfiles
+789f2dfae9603ba1800c96ced629fc2cd5a74820ca581fee8dbf262bf7774c8117b86a0bedb8b09f60278de0e27dc37176c7eddef706376b5565bbf4d0c193e4  terms.txt
+4e9b6c16a43c0f7065d910ed6aaebe97d2d718b0a75ea9f445bd70490cb9854861c1d3ef29e25d080cb47769d8d789e38a158f2c26a9f1cfcfb2c1722c20df43  plexmediaserver-1.15.4.993-bb4a2cb6c.x86_64.rpm"
