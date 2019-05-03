@@ -1,0 +1,3 @@
+[submodule "alpine-pkg-glibc"]
+	path = alpine-pkg-glibc
+	url = https://github.com/sgerrand/alpine-pkg-glibc

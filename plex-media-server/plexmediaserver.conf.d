@@ -1,6 +1,7 @@
-LD_LIBRARY_PATH=/usr/lib/plexmediaserver/lib
-PLEX_MEDIA_SERVER_HOME=/usr/lib/plexmediaserver
-PLEX_MEDIA_SERVER_APPLICATION_SUPPORT_DIR=/var/lib/plex
-PLEX_MEDIA_SERVER_MAX_PLUGIN_PROCS=6
-PLEX_MEDIA_SERVER_TMPDIR=/tmp
-TMPDIR=/tmp
+# Config file for /etc/init.d/plex-media-server
+
+PLEX_PIDFILE="/var/run/plex-media-server.pid"
+PLEX_OUTLOG="/var/log/plex/out.log"
+PLEX_ERRLOG="/var/log/plex/err.log"
+PLEX_USER="plex"
+PLEX_SCRIPT="/usr/lib/plexmediaserver/Resources/start.sh"
