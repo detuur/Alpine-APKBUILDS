@@ -1,0 +1,5 @@
+#!/bin/sh
+
+cd /var/log
+mkdir plex
+chown plex plex

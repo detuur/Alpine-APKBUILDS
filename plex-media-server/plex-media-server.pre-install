@@ -1,0 +1,9 @@
+#!/bin/sh
+
+adduser -S -D -H \
+	-h /usr/lib/plexmediaserver \
+	-s /sbin/nologin \
+	-g "Plex Media Server" \
+	plex 2>/dev/null
+
+exit 0
