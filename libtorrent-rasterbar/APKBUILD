@@ -36,3 +36,4 @@ package() {
 	cd "$builddir"
 	make DESTDIR="$pkgdir" install
 }
+sha512sums="6f264ca9fcdcb93c4e16ced4b2657ccb19d47cbd483c3ad9f14909ee7de280b50c15d180c05ebd454236871fceca48cd79647bf89f8cbebf234b8f0f351aa699  libtorrent-rasterbar-1.1.12.tar.gz"
