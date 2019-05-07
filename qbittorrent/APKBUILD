@@ -1,4 +1,4 @@
-# Alpine port: Arthur Jochems <detuur@gmail.com>
+# Alpine port: Arthur Jochems <detuur@gmail.com> - https://git.io/fjcT3
 # Original Arch Maintainer: Eli Schwartz <eschwartz@archlinux.org>
 # Contributor: Antonio Rojas <arojas@archlinux.org>
 # Contributor: Timothy Redaelli <timothy.redaelli@gmail.com>
@@ -16,8 +16,9 @@ arch="x86_64"
 url="https://www.qbittorrent.org"
 license="custom GPL"
 pkgdesc="An advanced BitTorrent client programmed in C++, based on Qt toolkit and libtorrent-rasterbar, w/o gui"
+subpackages="qbittorrent-nox-doc"
 depends="libtorrent-rasterbar qt5-qtbase"
-makedepends="boost-dev libtorrent-rasterbar qt5-qttools-dev qt5-qtsvg-dev"
+makedepends="boost-dev libtorrent-rasterbar-dev qt5-qttools-dev qt5-qtsvg-dev"
 source="https://downloads.sourceforge.net/sourceforge/qbittorrent/qbittorrent-${pkgver}.tar.gz
         https://raw.githubusercontent.com/qbittorrent/qBittorrent/master/5B7CC9A2.asc"
 validpgpkeys="D8F3DA77AAC6741053599C136E4A2D025B7CC9A2" # sledgehammer999 <sledgehammer999@qbittorrent.org>
@@ -28,16 +29,21 @@ build() {
   # tell qmake not to break makepkg's debug/!strip options
   #export QBT_ADD_CONFIG='nostrip'
   
+  pwd
   cd qbittorrent-${pkgver}
   mkdir qbittorrent-nox
+  pwd
   cd qbittorrent-nox
   ../configure --prefix=/usr --disable-gui
   make
+  pwd
   cd ..
 }
 
 package() {
-  cd qbittorrent-${pkgver}/qbittorrent-nox
+  cd src/qbittorrent-${pkgver}/qbittorrent-nox
   make INSTALL_ROOT="${pkgdir}" install
   install -Dm644 "${srcdir}"/qbittorrent-${pkgver}/COPYING "${pkgdir}"/usr/share/licenses/${pkgname}/COPYING
 }
+sha512sums="5a284ee3a39f0fd5ae19307d0d97e744d80fdc0e100dc2cda832242e017e1667ac41a75bf6536a941d76425a97d4270af36036bc36ea2410b97d2dd59c92ed66  qbittorrent-4.1.6.tar.gz
+1e30158bb15462787d0f5dea04c9cbb51fffa4e3de14cc9faad4e01a5e5e77896a32ba5ee244e68eb389bf6cc4dfbef7137560a63118a77007c04ddb6139ffe6  5B7CC9A2.asc"
