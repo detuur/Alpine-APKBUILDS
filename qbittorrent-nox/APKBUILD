@@ -29,14 +29,11 @@ build() {
   # tell qmake not to break makepkg's debug/!strip options
   #export QBT_ADD_CONFIG='nostrip'
   
-  pwd
   cd qbittorrent-${pkgver}
   mkdir qbittorrent-nox
-  pwd
   cd qbittorrent-nox
   ../configure --prefix=/usr --disable-gui
   make
-  pwd
   cd ..
 }
 
