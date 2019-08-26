@@ -19,7 +19,9 @@ pkgdesc="An advanced BitTorrent client programmed in C++, based on Qt toolkit an
 subpackages="qbittorrent-nox-doc"
 depends="libtorrent-rasterbar qt5-qtbase"
 makedepends="boost-dev libtorrent-rasterbar-dev qt5-qttools-dev qt5-qtsvg-dev"
-source="https://downloads.sourceforge.net/sourceforge/qbittorrent/qbittorrent-${pkgver}.tar.gz
+source="qbittorrent-nox.conf.d
+        qbittorrent-nox.init.d
+        https://downloads.sourceforge.net/sourceforge/qbittorrent/qbittorrent-${pkgver}.tar.gz
         https://raw.githubusercontent.com/qbittorrent/qBittorrent/master/5B7CC9A2.asc"
 validpgpkeys="D8F3DA77AAC6741053599C136E4A2D025B7CC9A2" # sledgehammer999 <sledgehammer999@qbittorrent.org>
 
@@ -41,6 +43,11 @@ package() {
   cd src/qbittorrent-${pkgver}/qbittorrent-nox
   make INSTALL_ROOT="${pkgdir}" install
   install -Dm644 "${srcdir}"/qbittorrent-${pkgver}/COPYING "${pkgdir}"/usr/share/licenses/${pkgname}/COPYING
+  install -D -m 644 "${srcdir}/qbittorrent-nox.conf.d" "${pkgdir}/etc/conf.d/qbittorrent-nox"
+  install -D -m 755 "${srcdir}/qbittorrent-nox.init.d" "${pkgdir}/etc/init.d/qbittorrent-nox"
+  install -d -m 755 "${pkgdir}/var/log/qbittorrent-nox"
 }
-sha512sums="5a284ee3a39f0fd5ae19307d0d97e744d80fdc0e100dc2cda832242e017e1667ac41a75bf6536a941d76425a97d4270af36036bc36ea2410b97d2dd59c92ed66  qbittorrent-4.1.6.tar.gz
+sha512sums="7295EB2BF63B8666966B290E17902C98648E6D25EB04DA189366510C2FFC0FFD00F20CCEC275E64F6896C4B8C59C16FFBF5723A6D99D62EA9DD92D5E19B5104A  qbittorrent-nox.conf.d
+C39856C2197DFA9F091290E02871D4216A72BAB150602A340E4A881C0EF6A79BDC54FC639C75DA6F8B9D01A68FD4654F54FE72CC8E04C95677647DD1B91A6CB5  qbittorrent-nox.init.d
+5a284ee3a39f0fd5ae19307d0d97e744d80fdc0e100dc2cda832242e017e1667ac41a75bf6536a941d76425a97d4270af36036bc36ea2410b97d2dd59c92ed66  qbittorrent-4.1.6.tar.gz
 1e30158bb15462787d0f5dea04c9cbb51fffa4e3de14cc9faad4e01a5e5e77896a32ba5ee244e68eb389bf6cc4dfbef7137560a63118a77007c04ddb6139ffe6  5B7CC9A2.asc"
